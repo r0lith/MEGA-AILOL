@@ -128,31 +128,27 @@ services:
     image: quay.io/qasimtech/mega-bot:latest
     container_name: mega-bot
     restart: unless-stopped
-    working_dir: /root/mega
+    working_dir: /root/mega-ai
     volumes:
-      - mega_data:/root/mega
-      - ./watch.sh:/root/mega/watch.sh
+      - ./watch.sh:/root/mega-ai/watch.sh
     ports:
       - "5000:5000"
     environment:
-      MONGODB_URI: ${MONGODB_URI}
-      BOT_NUMBER: ${BOT_NUMBER}
-      REMOVEBG_KEY: ${REMOVEBG_KEY}
-      TIME_ZONE: ${TIME_ZONE}
-      BOTNAME: ${BOTNAME}
-      OWNERS: ${OWNERS}
-      MODE: ${MODE}
-      PREFIX: ${PREFIX}
+      MONGODB_URI: ${MONGODB_URI:-mongodb://localhost:27017}
+      BOT_NUMBER: ${BOT_NUMBER:-923204566005}
+      REMOVEBG_KEY: ${REMOVEBG_KEY:-none}
+      TIME_ZONE: ${TIME_ZONE:-Asia/Karachi}
+      BOTNAME: ${BOTNAME:-MEGA-BOT}
+      OWNERS: ${OWNERS:-923204566005}
+      MODE: ${MODE:-public}
+      PREFIX: ${PREFIX:-.}
     command: sh -c "
-      git clone https://github.com/GlobalTechInfo/MEGA-AI /root/mega || true &&
-      rm -rf /root/mega/.git &&
-      chmod +x /root/mega/watch.sh &&
-      cd /root/mega &&
+      git clone https://github.com/GlobalTechInfo/MEGA-AI /root/mega-ai || true &&
+      rm -rf /root/mega-ai/.git &&
+      chmod +x /root/mega-ai/watch.sh &&
+      cd /root/mega-ai &&
       npm install || yarn install &&
       ./watch.sh"
-
-volumes:
-  mega_data:
 ```
 
 ---
