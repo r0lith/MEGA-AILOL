@@ -8,7 +8,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         : m.sender
   if (!(who in global.db.data.users)) throw `✳️ The user is not found in my database`
 
-  let pp = './assets/A.jpg'
+  let pp = './assets/A.png'
   let more = String.fromCharCode(8206)
   let readMore = more.repeat(850)
 
@@ -49,9 +49,6 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         'logomenu* - Create a logo that screams You.\n\n' +
         '💟 *' +
         usedPrefix +
-        'nsfwmenu* - The After Dark menu.\n\n' +
-        '🌀 *' +
-        usedPrefix +
         'aimenu* - Your Personal Artificial Intelligence Copilots.\n\n' +
         '🎧 *' +
         usedPrefix +
@@ -59,9 +56,15 @@ let handler = async (m, { conn, usedPrefix, command }) => {
          '🎉 *' +
         usedPrefix +
         'animemenu* - Animated Images,Stickers and Videos.\n\n' +
+         '🍒 *' +
+        usedPrefix +
+        'reactions* - Anime reactions menu for group.\n\n' +
         '🪁 *' +
         usedPrefix +
         'infoanime* - Full Information About Animes Like imdb.\n\n' +
+        '💡 *' +
+        usedPrefix +
+        'imagen* - Create Images and designs based on your thoughts/prompts.\n\n' +
         '🃏 *' +
         usedPrefix +
         'randompic* - Random Images you might like and love.\n\n' +
@@ -70,12 +73,15 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         'textpro* - Generate Beautiful Logos Using Text Of Your Choice.\n\n' +
         '🎥 *' +
         usedPrefix +
-        'randomvid* - Random Videos you might like and love.'
+        'randomvid* - Random Videos you might like and love.\n\n' +
+        '🖍️ *' +
+        usedPrefix +
+        'fancy* - Fancy text generator Menu.' 
         break
 
     case 'botmenu':
       lkr = `
-╭───『 *BOT* 』─❍
+╭───『 *Bot Menu* 』─❍
 ◈ • *allmenu*
 ◈ • *alive*
 ◈ • *autoreact*
@@ -99,25 +105,25 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *rentbot*
 ◈ • *runtime*
 ◈ • *server*
+◈ • *speedtest*
 ◈ • *stoprent*
 ◈ • *uptime*
 ╰─────────❍` //
       break
       case 'aimenu':
       lkr=`
-╭───『 *AI* 』─❍
+╭───『 *AI Menu* 』─❍
+◈ • *ai*
+◈ • *blackbox*
+◈ • *blackpink*
+◈ • *bro*
 ◈ • *chatgpt*
-◈ • *dalle*
-◈ • *stable*
-◈ • *darky*
-◈ • *lexica*
-◈ • *flux*
-◈ • *alexa*
 ◈ • *fact*
 ◈ • *google*
+◈ • *googleit*
+◈ • *gimage*
 ◈ • *gpt4*
-◈ • *bro*
-◈ • *ai*
+◈ • *travel*
 ◈ • *why*
 ╰─────────❍` //   
  break
@@ -126,7 +132,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
  case 'ephoto':
  case 'textpro':
       lkr=`
-╭───『 *TEXTPRO* 』─❍
+╭───『 *Textpro Menu* 』─❍
 ◈ • *3dsilver*
 ◈ • *balon*
 ◈ • *blackpink*
@@ -158,9 +164,26 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *wings*
 ╰─────────❍` //
  break
+      case 'imagen':
+      case 'imagenai':
+      lkr=`
+╭───『 *ImaGen Menu* 』─❍
+◈ • *animefy*
+◈ • *cartoon*
+◈ • *dalle*
+◈ • *hercai-lexica*
+◈ • *imagev3*
+◈ • *lexica*
+◈ • *prodia*
+◈ • *raava*
+◈ • *shonin*
+◈ • *simurg*
+◈ • *v2beta*
+╰─────────❍` //
+ break
     case 'ownermenu':
       lkr = `
-╭───『 *OWNER* 』─❍
+╭───『 *Owner* 』─❍
 ◈ • *addowner*
 ◈ • *addprem*
 ◈ • *addsudo*
@@ -173,6 +196,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *banuser*
 ◈ • *broadcast*
 ◈ • *broadcastgc*
+◈ • *clearchat*
 ◈ • *cleartmp*
 ◈ • *delcmd*
 ◈ • *delowner*
@@ -180,6 +204,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *delsudo*
 ◈ • *enable*
 ◈ • *fakereply*
+◈ • *fullpp*
 ◈ • *getfile*
 ◈ • *getmsg*
 ◈ • *getplugin*
@@ -190,10 +215,11 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *listcmd*
 ◈ • *listplugins*
 ◈ • *logout*
-◈ • *notes*
-◈ • *readvo*
+◈ • *readviewonce*
 ◈ • *remove*
 ◈ • *restart*
+◈ • *save*
+◈ • *savecontact*
 ◈ • *savefile*
 ◈ • *setppbot*
 ◈ • *setprefix*
@@ -208,7 +234,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       break
       case 'randompic':
       lkr = `
-╭───『 *RandomPic* 』─❍
+╭───『 *RandomPic Menu* 』─❍
 ◈ • *aesthetic*
 ◈ • *antiwork*
 ◈ • *bike*
@@ -246,7 +272,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       break
       case 'randomvid':
       lkr = `
-╭───『 *RandomVid* 』─❍
+╭───『 *Random-Vid Menu* 』─❍
 ◈ • *tiktokbocil*
 ◈ • *tiktokgirl*
 ◈ • *tiktokghea*
@@ -259,7 +285,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       break
     case 'groupmenu':
       lkr = `
-╭───『 *GROUP* 』─❍
+╭───『 *Group Menu* 』─❍
 ◈ • *add*
 ◈ • *admins*
 ◈ • *antilink*
@@ -268,7 +294,6 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *disable*
 ◈ • *enable*
 ◈ • *group*
-◈ • *getjids*
 ◈ • *groupinfo*
 ◈ • *kick*
 ◈ • *link*
@@ -300,8 +325,10 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     case 'dlmenu':
     case 'downloads':
       lkr = `
-╭───『 *DOWNLOAD* 』─❍
+╭───『 *Download* 』─❍
+◈ • *apkdl*
 ◈ • *apksearch*
+◈ • *audio*
 ◈ • *capcut*
 ◈ • *dlstatus*
 ◈ • *facebook*
@@ -318,11 +345,13 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *mediafire*
 ◈ • *mega*
 ◈ • *npmstalk*
-◈ • *pinvid*
-◈ • *pinimg*
+◈ • *pinterest*
+◈ • *pinterest2*
 ◈ • *play*
+◈ • *play2*
 ◈ • *play5*
 ◈ • *playstore*
+◈ • *playvid*
 ◈ • *ringtone*
 ◈ • *rnekos*
 ◈ • *rwall*
@@ -331,7 +360,8 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *tiktok*
 ◈ • *ttstalk*
 ◈ • *twitter*
-◈ • *ssearch*
+◈ • *video*
+◈ • *wallpapers*
 ◈ • *ytmp3*
 ◈ • *ytmp4*
 ◈ • *ytsearch*
@@ -340,20 +370,30 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     case 'economymenu':
     case 'economy':
       lkr = `
-╭───『 *ECONOMY* 』─❍
+╭───『 *Economy* 』─❍
 ◈ • *addgold*
 ◈ • *addxp*
+◈ • *adventure*
 ◈ • *balance*
 ◈ • *bank*
+◈ • *bet*
 ◈ • *buyall*
 ◈ • *buych*
-◈ • *claim*
+◈ • *claim/daily*
+◈ • *craft*
 ◈ • *deposit*
 ◈ • *give*
+◈ • *heal*
 ◈ • *leaderboard*
+◈ • *levelup*
 ◈ • *mine*
+◈ • *monthly*
+◈ • *opencrate*
 ◈ • *rob*
 ◈ • *sell*
+◈ • *shop*
+◈ • *todiamond*
+◈ • *tomoney*
 ◈ • *transfer*
 ◈ • *wallet*
 ◈ • *weekly*
@@ -362,12 +402,12 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       break
     case 'funmenu':
       lkr = `
-╭───『 *FUN* 』─❍
+╭───『 *Fun Menu* 』─❍
 ◈ • *alexa*
-◈ • *hack*
-◈ • *teddy*
+◈ • *character*
 ◈ • *dare*
 ◈ • *flirt*
+◈ • *gay*
 ◈ • *hack*
 ◈ • *hornycard*
 ◈ • *lolicon*
@@ -380,9 +420,40 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *ytcomment*
 ╰─────────❍` //
       break
+      case 'animereactions':
+case 'reactions':
+lkr=`
+╭───『 *Reactions Menu* 』─❍
+◈ • *awoo*
+◈ • *bite*
+◈ • *blush*
+◈ • *bonk*
+◈ • *bully*
+◈ • *cringe*
+◈ • *cry*
+◈ • *cuddle*
+◈ • *dance*
+◈ • *glomp*
+◈ • *happy*
+◈ • *handhold*
+◈ • *highfive*
+◈ • *hug*
+◈ • *kill*
+◈ • *kiss*
+◈ • *lick*
+◈ • *nom*
+◈ • *poke*
+◈ • *pat*
+◈ • *smug*
+◈ • *slap*
+◈ • *wave*
+◈ • *wink*
+◈ • *yeet*
+╰─────────❍` //
+      break
     case 'animemenu':
       lkr = `
-╭───『 *ANIME* 』─❍
+╭───『 *Anime Menu* 』─❍
 ◈ • *akira*
 ◈ • *akiyama*
 ◈ • *anna*
@@ -422,7 +493,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       break
       case 'infoanime':
       lkr = `
-╭───『 *INFO ANIME* 』─❍
+╭───『 *Anime Info Menu* 』─❍
 ◈ • *anime akira*
 ◈ • *anime akiyama*
 ◈ • *anime anna*
@@ -461,7 +532,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     case 'gamemenu':
     case 'gamesmenu':
       lkr = `
-╭───『 *GAME* 』─❍
+╭───『 *Game Menu* 』─❍
 ◈ • *casino*
 ◈ • *chess*
 ◈ • *cock-fight*
@@ -478,7 +549,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
       break
     case 'stickermenu':
       lkr = `
-╭───『 *STICKER* 』─❍
+╭───『 *Sticker Menu* 』─❍
 ◈ • *attp*
 ◈ • *attp2*
 ◈ • *attp3*
@@ -505,26 +576,29 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     case 'toolmenu':
     case 'toolsmenu':
       lkr = `
-╭───『 *TOOLS* 』─❍
+╭───『 *Tools Menu* 』─❍
 ◈ • *android*
+◈ • *autosticker*
 ◈ • *base64*
 ◈ • *calc*
 ◈ • *carbon*
 ◈ • *checkmail*
+◈ • *course*
 ◈ • *define*
 ◈ • *element*
 ◈ • *enhance*
-◈ • *styletext*
+◈ • *fancy*
 ◈ • *filelength*
 ◈ • *google*
+◈ • *googleit*
+◈ • *happymod*
 ◈ • *imdb*
 ◈ • *itunes*
 ◈ • *linux*
 ◈ • *lyrics*
 ◈ • *nowa*
 ◈ • *pokedex*
-◈ • *qmkr*
-◈ • *qrcode*
+◈ • *qrmaker*
 ◈ • *quote*
 ◈ • *readmore*
 ◈ • *readqr*
@@ -533,13 +607,15 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 ◈ • *removebg*
 ◈ • *remini*
 ◈ • *ssweb*
+◈ • *styletext*
 ◈ • *technews*
 ◈ • *tinyurl*
-◈ • *time*
+◈ • *tocartoon*
 ◈ • *topdf*
 ◈ • *tourl*
 ◈ • *trace*
 ◈ • *translate*
+◈ • *true*
 ◈ • *wa*
 ◈ • *weather*
 ◈ • *whatmusic*
@@ -550,7 +626,7 @@ break
 case 'aeditor':
 case 'audioeditor':
 lkr=`
-╭───『 *AUDIOS* 』─❍
+╭───『 *Audio Menu* 』─❍
 ◈ • *bass*
 ◈ • *blown*
 ◈ • *chipmunk*
@@ -566,93 +642,10 @@ lkr=`
 ◈ • *tupai*
 ╰─────────❍` //
       break
-    case 'nsfwmenu': 
-      lkr = `
-  ╭───『 *NSFW* 』─❍
-  ◈ • *genshin*
-  ◈ • *swimsuit*
-  ◈ • *schoolswimsuit*
-  ◈ • *white*
-  ◈ • *barefoot*
-  ◈ • *touhou*
-  ◈ • *gamecg*
-  ◈ • *hololive*
-  ◈ • *uncensored*
-  ◈ • *sunglasses*
-  ◈ • *glasses*
-  ◈ • *weapon*
-  ◈ • *shirtlift*
-  ◈ • *chain*
-  ◈ • *fingering*
-  ◈ • *flatchest*
-  ◈ • *torncloth*
-  ◈ • *bondage*
-  ◈ • *demon*
-  ◈ • *wet*
-  ◈ • *pantypull*
-  ◈ • *headdress*
-  ◈ • *headphone*
-  ◈ • *tie*
-  ◈ • *anusview*
-  ◈ • *shorts*
-  ◈ • *stokings*
-  ◈ • *topless*
-  ◈ • *beach*
-  ◈ • *bunnygirl*
-  ◈ • *bunnyear*
-  ◈ • *idol*
-  ◈ • *vampire*
-  ◈ • *gun*
-  ◈ • *maid*
-  ◈ • *bra*
-  ◈ • *nobra*
-  ◈ • *bikini*
-  ◈ • *whitehair*
-  ◈ • *blonde*
-  ◈ • *pinkhair*
-  ◈ • *bed*
-  ◈ • *ponytail*
-  ◈ • *nude*
-  ◈ • *dress*
-  ◈ • *underwear*
-  ◈ • *foxgirl*
-  ◈ • *uniform*
-  ◈ • *skirt*
-  ◈ • *sex*
-  ◈ • *sex2*
-  ◈ • *sex3*
-  ◈ • *breast*
-  ◈ • *twintail*
-  ◈ • *spreadpussy*
-  ◈ • *tears*
-  ◈ • *seethrough*
-  ◈ • *breasthold*
-  ◈ • *drunk*
-  ◈ • *fateseries*
-  ◈ • *spreadlegs*
-  ◈ • *openshirt*
-  ◈ • *headband*
-  ◈ • *food*
-  ◈ • *close*
-  ◈ • *tree*
-  ◈ • *nipples*
-  ◈ • *erectnipples*
-  ◈ • *horns*
-  ◈ • *greenhair*
-  ◈ • *wolfgirl*
-  ◈ • *catgirl*
-  ◈ • *nsfw*
-  ◈ • *ass*
-  ◈ • *boobs*
-  ◈ • *lesbian*
-  ◈ • *pussy*
-  ◈ • *pack*
-  ╰─────────❍` //
-      break
     case 'logomenu':
     case 'makermenu':
       lkr = `
-╭───『 *MAKER* 』─❍
+╭───『 *Maker Menu* 』─❍
 ◈ • *blur*
 ◈ • *difuminar2*
 ◈ • *enhance*
@@ -717,7 +710,6 @@ handler.help = [
   'gamemenu',
   'gamesmenu',
   'stickermenu',
-  'nsfwmenu',
   'logomenu',
   'makermenu',
   'randompic',
@@ -753,7 +745,6 @@ handler.command = [
   'gamemenu',
   'gamesmenu',
   'stickermenu',
-  'nsfwmenu',
   'logomenu',
   'makermenu',
   'randompic',

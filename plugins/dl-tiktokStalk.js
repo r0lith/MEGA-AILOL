@@ -25,7 +25,7 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
 
         // Handle profilePic: If it's missing, use a default fallback image
         const imageToSend = profilePic || 'https://upload.wikimedia.org/wikipedia/commons/8/85/TikTok_logo_2018.svg';
-        await m.react('✅');
+        await m.react('🎉');
 
         // Send the formatted message and the profile picture (or default image)
         await conn.sendFile(m.chat, imageToSend, 'tt.png', te, m);

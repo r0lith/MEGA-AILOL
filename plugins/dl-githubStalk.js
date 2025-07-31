@@ -2,7 +2,7 @@ import pkg from 'api-qasim';
 const { githubStalk } = pkg;
 
 let handler = async (m, { conn, args, text, usedPrefix, command }) => {
-    if (!args[0]) throw `✳️ ${mssg.noUsername}\n\n📌${mssg.example} : ${usedPrefix + command} GlobalTechInfo`;
+    if (!args[0]) throw `✳️ ${mssg.noUsername}\n\n📌${mssg.example} : ${usedPrefix + command} Riruru`;
 
     try {
         await m.react('⏳');
@@ -44,7 +44,7 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
 
         // Send the message with the profile image
         const imageToSend = profile_pic || 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
-        await m.react('✅');
+        await m.react('🎉');
         await conn.sendFile(m.chat, imageToSend, 'GitHubProfile.jpg', te, m);
     } catch (error) {
         m.reply(`✳️ ${mssg.error}: ${error}`);

@@ -3,39 +3,31 @@ import fetch from 'node-fetch';
 let handler = async (m, { text, usedPrefix, command, conn }) => {
   try {
     // Fetch environment variables with defaults
-    const OwnerName = process.env.OWNER_NAME || '𝙺𝙰𝚂𝙸𝙼 𝙰𝙻𝙸';
-    const timeZone = process.env.TIME_ZONE || '𝙿𝙰𝙺𝙸𝚂𝚃𝙰𝙽';
-    const profession = process.env.OWNER_STATUS || '𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁';
-    const skills = process.env.OWNER_SKILLS || '𝙹𝙰𝚅𝙰𝚂𝙲𝚁𝙸𝙿𝚃';
-    const language = process.env.LANGUAGE || '𝙴𝙽𝙶𝙻𝙸𝚂𝙷,𝚄𝚁𝙳𝚄';
-    const project = process.env.BOTNAME || '𝚄𝙻𝚃𝚁𝙰-𝙼𝙳';
-    const hobbies = process.env.HOBBIES || '𝙲𝙾𝙳𝙸𝙽𝙶,𝙱𝙾𝚃𝚂';
+    const OwnerName = process.env.OWNER_NAME || 'Rolith Rathwa';
+    const timeZone = process.env.TIME_ZONE || 'India';
+    const profession = process.env.OWNER_STATUS || 'White Hat';
+    const skills = process.env.OWNER_SKILLS || 'Potato';
+    const language = process.env.LANGUAGE || 'Gujarati, Hindi, Rathwi & English';
+    const project = process.env.BOTNAME || 'Riruru';
+    const hobbies = process.env.HOBBIES || 'Yawning multiple times in a single second';
 
     // Expanded intro card text with additional fields
     const introText = `
- ◈ •╭═══ ━ ━ • ━ ━ ━ ═══♡᭄
- ◈ •│       「 𝗠𝗬 𝗜𝗡𝗧𝗥𝗢 」
- ◈ •│ Name    : ${OwnerName}
- ◈ •│
- ◈ •│ Place     : ${timeZone}
- ◈ •│
- ◈ •│ Gender  : 𝙼𝙰𝙻𝙴
- ◈ •│
- ◈ •│ Age        : 𝟸𝟼_
- ◈ •│
- ◈ •│ Status   : ${profession}
- ◈ •│
- ◈ •│ Skills     : ${skills}
- ◈ •│
- ◈ •│ Lang     : ${language}
- ◈ •│
- ◈ •│ Project  : ${project}
- ◈ •│
- ◈ •│ Hobbie  : ${hobbies}
- ◈ •╰═══ ━ ━ • ━ ━ ━ ═══♡᭄
+About Me:
+
+Name    : ${OwnerName}
+Place   : ${timeZone}
+Gender  : Male
+Age     : 25
+Status  : ${profession}
+Skill   : ${skills}
+Lang    : ${language}
+Project : ${project}
+Hobbie  : ${hobbies}
+
     `;
 
-    let pp = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';
+    let pp = 'https://i.ibb.co/TMn2DjB7/Rolith.jpg';
 
     // Try fetching the profile picture of the sender
     try {
@@ -44,13 +36,13 @@ let handler = async (m, { text, usedPrefix, command, conn }) => {
       console.log("Error fetching profile picture:", e);
     }
 
-    const sourceUrl = 'https://youtube.com/@GlobalTechInfo'; // Example source URL for the card
-    const OwnerImg = 'https://github.com/GlobalTechInfo.png';
+    const sourceUrl = 'https://youtube.com/'; // Example source URL for the card
+    const OwnerImg = 'https://i.ibb.co/TMn2DjB7/Rolith.jpg';
     const contextInfo = {
       mentionedJid: [m.sender],
       externalAdReply: {
-        title: 'MEGA-AI', // Title of the card
-        body: '𝑇𝛩𝑈𝐶𝛨 𝛨𝛯𝑅𝛯',
+        title: 'Riruru', // Title of the card
+        body: 'Touch Me',
         thumbnailUrl: OwnerImg, // Fixed URL syntax with quotes
         mediaUrl: pp,  // Corrected to use profile picture URL fetched
         sourceUrl: sourceUrl, // Source URL for the card

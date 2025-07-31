@@ -57,7 +57,7 @@ handler.before = async m => {
   if (/no?/g.test(m.text.toLowerCase())) {
     clearTimeout(timeout)
     delete confirmation[sender]
-    return m.reply('✅ Transfer Canceled')
+    return m.reply('🎉 Transfer Canceled')
   }
   if (/yes?/g.test(m.text.toLowerCase())) {
     let previous = user[type] * 1
@@ -66,7 +66,7 @@ handler.before = async m => {
     _user[type] += count * 1
     if (previous > user[type] * 1 && _previous < _user[type] * 1)
       m.reply(
-        `Transaction Successful ✅ \n\n*₹${count}* was transfered to @${(to || '').replace(/@s\.whatsapp\.net/g, '')}`,
+        `Transaction Successful 🎉 \n\n*₹${count}* was transfered to @${(to || '').replace(/@s\.whatsapp\.net/g, '')}`,
         null,
         { mentions: [to] }
       )

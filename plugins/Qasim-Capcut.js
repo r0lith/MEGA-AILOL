@@ -27,12 +27,12 @@ const handler = async (m, { conn, args }) => {
     const arrayBuffer = await response.arrayBuffer();
     const mediaBuffer = Buffer.from(arrayBuffer);
 
-    const fileName = video ? 'media.mp4' : 'media.jpg';
+    const fileName = video ? 'media.mp4' : 'mediA.png';
     const mimetype = video ? 'video/mp4' : 'image/jpeg';
     
     // Send the media file
-    await conn.sendFile(m.chat, mediaBuffer, fileName, `*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 © 𝚄𝙻𝚃𝚁𝙰-𝙼𝙳*`, m, false, { mimetype });
-    m.react('✅');
+    await conn.sendFile(m.chat, mediaBuffer, fileName, `*By Riruru*`, m, false, { mimetype });
+    m.react('🎉');
   } catch (error) {
     console.error('Error downloading from CapCut:', error.message, error.stack);
     await m.reply('⚠️ An error occurred while processing the request. Please try again later.');

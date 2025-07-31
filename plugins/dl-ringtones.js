@@ -99,8 +99,8 @@ handler.before = async (m, { conn }) => {
       console.log(`Ringtone downloaded to: ${filePath}`);
 
       // Send the ringtone to the user
-      await conn.sendFile(m.chat, filePath, title + '.mp3', `*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 © 𝚄𝙻𝚃𝚁𝙰-𝙼𝙳* 🎶\n\nCreator: ${creator}`, m);
-      m.react('✅');
+      await conn.sendFile(m.chat, filePath, title + '.mp3', `*By Riruru* 🎶\n\nCreator: ${creator}`, m);
+      m.react('🎉');
 
       // Log the success
       console.log(`Ringtone sent to ${m.sender}`);

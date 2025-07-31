@@ -5,7 +5,7 @@ export function before(m) {
   if (user.afk > -1) {
     m.reply(
       `
-  ✅ You stopped being AFK 
+  🎉 You stopped being AFK 
 ${user.afkReason ? ' \n▢ *Reason :* ' + user.afkReason : ''}
 ▢ *AFK Duration :* ${(new Date() - user.afk).toTimeString()}
   `.trim()

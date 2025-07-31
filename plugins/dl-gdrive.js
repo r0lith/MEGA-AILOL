@@ -67,8 +67,8 @@ const handler = async (m, { conn, args }) => {
       const fileName = mediaData.title ? `${mediaData.title}.mp4` : 'media.mp4';
       const mimetype = 'video/mp4';
 
-      await conn.sendFile(m.chat, mediaBuffer, fileName, '*Powered by Ultra-MD*', m, false, { mimetype });
-      m.react('✅');
+      await conn.sendFile(m.chat, mediaBuffer, fileName, '*Powered by Riruru*', m, false, { mimetype });
+      m.react('🎉');
     }
     // Handle image download
     else if (contentType.includes('image')) {
@@ -77,11 +77,11 @@ const handler = async (m, { conn, args }) => {
 
       if (mediaBuffer.length === 0) throw new Error('Downloaded image is empty');
 
-      const fileName = mediaData.title ? `${mediaData.title}.jpg` : 'media.jpg';
+      const fileName = mediaData.title ? `${mediaData.title}.jpg` : 'mediA.png';
       const mimetype = 'image/jpeg';
 
-      await conn.sendFile(m.chat, mediaBuffer, fileName, '*Powered by Ultra-MD*', m, false, { mimetype });
-      m.react('✅');
+      await conn.sendFile(m.chat, mediaBuffer, fileName, '*Powered by Riruru*', m, false, { mimetype });
+      m.react('🎉');
     } else {
       throw new Error('Unsupported media type');
     }

@@ -18,7 +18,7 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
 ▢ *🏝️${mssg.posts}:* ${res.posts}
 ▢ *🔗${mssg.link}:* https://instagram.com/${res.username.replace(/^@/, '')}
 └────────────`;
-        await m.react('✅');
+        await m.react('🎉');
         await conn.sendFile(m.chat, res.profilePic, 'tt.png', te, m);
     } catch (error) {
         m.reply(`✳️ ${error}`);

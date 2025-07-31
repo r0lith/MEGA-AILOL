@@ -21,7 +21,7 @@ let mentions = text.replace(event, '').trimStart()
 let who = mentions ? conn.parseMention(mentions) : []
 let part = who.length ? who : [m.sender]
 let act = false
-m.reply(`✅ Simulando ${event}...`)
+m.reply(`🎉 Simulando ${event}...`)
 switch (event.toLowerCase()) {
         case 'add':
         case 'bienvenida':

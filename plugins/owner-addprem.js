@@ -12,7 +12,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   conn.reply(
     m.chat,
     `
-✅ PREMIUM
+🎉 PREMIUM
 
 @${who.split`@`[0]} now you become a premium user
 ┌───────────

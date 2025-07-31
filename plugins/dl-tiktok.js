@@ -45,10 +45,10 @@ const handler = async (message, { conn, args }) => {
     const mediaBuffer = Buffer.from(arrayBuffer);
 
     // Send the video file to the user
-    await conn.sendFile(message.chat, mediaBuffer, 'tiktok.mp4', '*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 © 𝚄𝙻𝚃𝚁𝙰-𝙼𝙳*', message, false, { mimetype: 'video/mp4' });
+    await conn.sendFile(message.chat, mediaBuffer, 'tiktok.mp4', '*By Riruru*', message, false, { mimetype: 'video/mp4' });
 
     // React with a success emoji
-    message.react('✅');
+    message.react('🎉');
   } catch (error) {
     // Log and handle any errors
     console.error('Error downloading from TikTok:', error.message, error.stack);
@@ -62,5 +62,4 @@ handler.help = ['tiktok', 'tt', 'tikdown', 'ttdl'];
 handler.tags = ['downloader'];
 handler.command = ['tiktok', 'tt', 'tikdown', 'ttdl'];
 
-handler.limit = true
 export default handler;

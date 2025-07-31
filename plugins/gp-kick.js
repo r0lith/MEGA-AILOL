@@ -6,7 +6,7 @@ let user = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted.sender
 if (conn.user.jid.includes(user)) return m.reply(`✳️ No puedo hacer un auto kick`)
 
 await conn.groupParticipantsUpdate(m.chat, [user], 'remove')
-m.reply(`✅ ${mssg.kick}`) 
+m.reply(`🎉 ${mssg.kick}`) 
 
 }
 

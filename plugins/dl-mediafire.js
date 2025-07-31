@@ -23,7 +23,7 @@ let handler = async (m, { conn, text }) => {
 
     // Validate the response to ensure valid data
     if (!mediafireData || !mediafireData.name || !mediafireData.link) {
-      await m.react('✅');
+      await m.react('🎉');
       return m.reply("No valid data found for the provided URL.");
     }
 
@@ -34,9 +34,9 @@ let handler = async (m, { conn, text }) => {
 ▢ *Size:* ${mediafireData.size}
 ▢ *Type:* ${mediafireData.filetype}
 
-*Download In Progress....Please Wait ⌛*\n\n*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 © 𝚄𝙻𝚃𝚁𝙰-𝙼𝙳*`;
+*Download In Progress....Please Wait ⌛*\n\n*By Riruru*`;
 
-    await m.react('✅');
+    await m.react('🎉');
     await conn.sendMessage(m.chat, { text: caption }, { quoted: m });
 
     // Check for file size limit (100MB) for WhatsApp
@@ -133,5 +133,4 @@ handler.help = ['mediafire', 'mfire'];
 handler.tags = ['search'];
 handler.command = ['mediafire', 'mfire'];
 
-handler.limit = true
 export default handler;

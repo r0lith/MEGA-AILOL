@@ -1,30 +1,60 @@
-let handler = async (m, { conn }) => {
-  if (!conn) {
-    console.error('Connection object is undefined');
-    return; // or handle the error as appropriate
-  }
+import pkg from 'baileys-pro';
+const { proto, prepareWAMessageMedia, generateWAMessageFromContent } = pkg;
 
-  const ownerNumber = process.env.OWNERS || global.owner[0] ? global.owner[0][0] : '923444844060'; // Fallback
-  const OwnerName = process.env.OWNER_NAME || 'QASIM ALI';
-  let vcard = `BEGIN:VCARD
-VERSION:3.0
-N:;${ownerNumber};;;
-FN:${OwnerName}
-ORG:GlobalTechInfo
-TITLE:${OwnerName}
-item1.TEL;waid=${ownerNumber}:${ownerNumber}
-item1.X-ABLabel:Owner
-X-WA-BIZ-DESCRIPTION:Owner of the Bot
-X-WA-BIZ-NAME:${OwnerName}
-END:VCARD`;
+let handler = async (m, { conn, usedPrefix }) => {
+  const OwnerName = 'Hello there!';
+  const str = `Rolith on this side, its nice to meet you. Want to know me more? check the options below`;
 
-  await conn.sendMessage(m.chat, {
-    contacts: {
-      displayName: OwnerName,
-      contacts: [{ vcard }]
+  let msg = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        "messageContextInfo": {
+          "deviceListMetadata": {},
+          "deviceListMetadataVersion": 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: str
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+            ...(await prepareWAMessageMedia({ image: { url: './assets/A.png' } }, { upload: conn.waUploadToServer } )),
+            title: null,
+            subtitle: null,
+            hasMediaAttachment: false
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [
+              {
+                "name": "single_select",
+                "buttonParamsJson": JSON.stringify({
+                  "title": "Tap Here",
+                  "sections": [{
+                    "highlight_label": "Me",
+                    "rows": [
+                      { "header": "", "title": "About Me", "description": "About the Owner", "id": `${usedPrefix}aboutme` },
+                      { "header": "", "title": "Report A Bug", "description": "Found an issue? Let us know!", "id": `${usedPrefix}bug` }
+                    ]
+                  }]
+                })
+              },
+              {
+                "name": "cta_url",
+                "buttonParamsJson": JSON.stringify({
+                  "display_text": "Chat with me",
+                  "url": "https://wa.me/+919737825303"
+                })
+              }
+            ],
+          })
+        })
+      }
     }
-  }, { quoted: m });
-}
+  }, {});
+
+  await conn.relayMessage(msg.key.remoteJid, msg.message, {
+    messageId: msg.key.id
+  });
+};
 
 handler.help = ['owner'];
 handler.tags = ['main'];

@@ -24,12 +24,12 @@ let handler = async (m, { conn }) => {
     const buffer = Buffer.from(arrayBuffer)
 
     // Send the image with a thumbnail and custom message
-    await conn.sendFile(m.chat, img, '', '*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 © 𝚄𝙻𝚃𝚁𝙰-𝙼𝙳*', m, 0, {
+    await conn.sendFile(m.chat, img, '', '*By Riruru*', m, 0, {
       thumbnail: buffer, // Use the Buffer for the thumbnail
     })
 
     // After processing, send the "done" reaction
-    await m.react('✅')
+    await m.react('🎉')
   } catch (error) {
     console.error('Error fetching image:', error)
     await m.react('❌')  // Send a "fail" reaction if an error occurs

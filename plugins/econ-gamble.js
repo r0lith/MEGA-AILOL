@@ -77,7 +77,7 @@ const handler = async (m, { conn, args, usedPrefix, command }) => {
       rouletteBets[chatId] = []
     }
     rouletteBets[chatId].push({ user, amount, color })
-    return `✅ Your bet of ${amount} gold on ${color} has been placed!`
+    return `🎉 Your bet of ${amount} gold on ${color} has been placed!`
   }
 
   //const handler = async (m, { conn, args, usedPrefix, command }) => {

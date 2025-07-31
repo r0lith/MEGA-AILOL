@@ -22,7 +22,7 @@ let handler = async (m, { text }) => {
   delete sticker[hash];
   
   // Confirm deletion
-  m.reply(`✅ Command deleted.`);
+  m.reply(`🎉 Command deleted.`);
 }
 
 handler.help = ['cmd'].map(v => 'del' + v + ' <text>');

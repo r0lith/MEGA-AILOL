@@ -48,14 +48,14 @@ const handler = async (message, { conn, args }) => {
     const mediaBuffer = Buffer.from(arrayBuffer);
 
     // Determine the file name and MIME type based on whether it's a video or image
-    const fileName = video ? 'media.mp4' : 'media.jpg';
+    const fileName = video ? 'media.mp4' : 'mediA.png';
     const mimeType = video ? 'video/mp4' : 'image/jpeg';
 
     // Send the media file to the user
     await conn.sendFile(message.chat, mediaBuffer, fileName, '*ᴘᴏᴡᴇʀᴇᴅ ʙʏ © ɢʟᴏʙᴀʟᴛᴇᴄʜɪɴꜰᴏ*', message, false, { mimetype: mimeType });
 
     // React with a success emoji
-    message.react('✅');
+    message.react('🎉');
   } catch (error) {
     // Log and handle any errors
     console.error('Error downloading from Instagram Threads:', error.message, error.stack);

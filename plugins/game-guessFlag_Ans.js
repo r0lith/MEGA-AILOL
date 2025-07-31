@@ -1,4 +1,4 @@
-/* import similarity from 'similarity'
+import similarity from 'similarity'
 const threshold = 0.72
 export async function before(m) {
   let id = m.chat
@@ -24,7 +24,7 @@ export async function before(m) {
 
     if (m.text.toLowerCase() == json.name.toLowerCase().trim()) {
       global.db.data.users[m.sender].exp += this.tebakbendera[id][2]
-      this.reply(m.chat, `✅ *correct!*\n+${this.tebakbendera[id][2]} XP`, m)
+      this.reply(m.chat, `🎉 *correct!*\n+${this.tebakbendera[id][2]} XP`, m)
       clearTimeout(this.tebakbendera[id][3])
       delete this.tebakbendera[id]
     } else if (similarity(m.text.toLowerCase(), json.name.toLowerCase().trim()) >= threshold)
@@ -34,5 +34,3 @@ export async function before(m) {
   return !0
 }
 export const exp = 0
-
-*/

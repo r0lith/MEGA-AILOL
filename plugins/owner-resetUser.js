@@ -40,7 +40,7 @@ let handler = async (m, { conn, text }) => {
 
     delete global.global.db.data.users[user]
 
-    conn.reply(m.chat, `*❏ USER RESET*\n\n✅ Rebooted to @${number} from the *DATABASE*`, null, {
+    conn.reply(m.chat, `*❏ USER RESET*\n\n🎉 Rebooted to @${number} from the *DATABASE*`, null, {
       mentions: [user],
     })
   }

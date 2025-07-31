@@ -1,4 +1,4 @@
-/*import remini from '../lib/remini.js'; // Importing the remini function
+import remini from '../lib/remini.js'; // Importing the remini function
 
 let handler = async (m, { conn, usedPrefix, command, quoted }) => {
   try {
@@ -77,4 +77,3 @@ handler.tags = ['image'];
 handler.command = ['remini', 'dehaze', 'recolor', 'hdr'];
 
 export default handler;
-*/

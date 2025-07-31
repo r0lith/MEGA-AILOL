@@ -7,15 +7,12 @@ import path from 'path'
 
 let handler = async (m, { conn, text }) => {
   try {
-    // Check if no text and no quoted message
-    if (!text && !(m.quoted && m.quoted.text)) {
-      // Reply in WhatsApp, not just logging in the terminal
-      return m.reply("Please provide some text or quote a message to get a response.")
+    // Only allow quoting a message, not direct text
+    if (!(m.quoted && m.quoted.text)) {
+      return m.reply("Please reply to a message with !quote to generate a quote image.")
     }
 
-    if (!text && m.quoted && m.quoted.text) {
-      text = m.quoted.text
-    }
+    text = m.quoted.text
 
     let who = m.quoted
       ? m.quoted.sender
@@ -28,7 +25,7 @@ let handler = async (m, { conn, text }) => {
     
     let userPfp = await conn
       .profilePictureUrl(who, 'image')
-      .catch(_ => 'https://i.ibb.co/9HY4wjz/a4c0b1af253197d4837ff6760d5b81c0.jpg')
+      .catch(_ => 'https://i.ibb.co/0rK5vH5/tra.png')
     let user = global.db.data.users[who]
     let { name } = global.db.data.users[who]
 
@@ -38,8 +35,8 @@ let handler = async (m, { conn, text }) => {
       type: 'quote',
       format: 'png',
       backgroundColor: '#FFFFFF',
-      width: 1800,
-      height: 200, // Adjust the height value as desired
+      width: 500,
+      height: 500, // Adjust the height value as desired
       scale: 2,
       messages: [
         {
@@ -105,7 +102,7 @@ let handler = async (m, { conn, text }) => {
     // Clean up temporary file
     fs.unlinkSync(tempImagePath)
 
-    m.react('🤡')
+    m.react('🎉')
   } catch (e) {
     console.error(e)
     m.react('😭')
@@ -115,5 +112,4 @@ let handler = async (m, { conn, text }) => {
 handler.help = ['quote']
 handler.tags = ['fun']
 handler.command = ['quote']
-
 export default handler

@@ -15,7 +15,7 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
   )
   // m.reply('[WIP Feature]')
   if (room) {
-    m.reply('✅ mate found')
+    m.reply('🎉 mate found')
     room.o = m.chat
     room.game.playerO = m.sender
     room.state = 'PLAYING'

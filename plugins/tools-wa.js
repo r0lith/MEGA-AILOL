@@ -14,7 +14,7 @@ let handler = async (m, { conn, usedPrefix, text, command }) => {
 
   conn.sendMessage(m.chat, { text: message, quoted: m, contextInfo: { mentionedJid: [m.sender] } })
 
-  m.react('✅')
+  m.react('🎉')
 }
 
 handler.help = ['wa']

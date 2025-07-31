@@ -27,7 +27,7 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
 ▢ *🏷️Dist Tags:* Latest Version: ${distTags.latest}
 ▢ *🔗Link:* https://npmjs.com/package/${name}
 └────────────`;
-        await m.react('✅');
+        await m.react('🎉');
         // Send the text message to the chat
         await conn.sendMessage(m.chat, { text: te }, { quoted: m });
     } catch (error) {

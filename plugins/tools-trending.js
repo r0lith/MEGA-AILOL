@@ -32,10 +32,10 @@ let handler = async (m, { text, command, usedPrefix, conn }) => {
             }).join('\n');
 
             let data = {
-                text: `*Trending topics in ${text}:*\n\n${trends}\n\n*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 © 𝚄𝙻𝚃𝚁𝙰-𝙼𝙳*`,
+                text: `*Trending topics in ${text}:*\n\n${trends}\n\n*By Riruru*`,
             };
             await conn.sendMessage(m.chat, data, { quoted: m });
-            m.react('✅');
+            m.react('🎉');
         } else {
             // Handle case where there are no valid trends
             throw "No trending data found for this country.";

@@ -225,8 +225,9 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
 ⛊ welcome
 ⛊ antilink
 ⛊ nsfw
-⛊ pmblocker
+⛊ autosticker
 ⛊ detect
+⛊ jarvis
 ⛊ antispam
 ⛊ antitoxic
 ╰──────────❍ 
@@ -236,9 +237,6 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
 ╰──────────❍
 ◈──『 *OWNER*』
 ⛊ onlydm
-⛊ self
-⛊ restrict
-⛊ anticall
 ⛊ grouponly
 ⛊ autotype
 ⛊ autobio
@@ -252,7 +250,7 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
 
   m.reply(
     `
-✅ *${type}* Now *${isEnable ? 'Active' : 'Deactive'}* ${isAll ? 'for this bot' : isUser ? '' : 'for this bot'}
+🎉 *${type}* Now *${isEnable ? 'Active' : 'Deactive'}* ${isAll ? 'for this bot' : isUser ? '' : 'for this bot'}
 `.trim()
   )
 }
