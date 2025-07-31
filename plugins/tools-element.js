@@ -15,7 +15,7 @@ let elementHandler = async (m, { conn, text }) => {
 
     console.log('JSON response:', json)
 
-    let elementInfo = `* Information:*\n
+    let elementInfo = `*Element Information:*\n
      • *Name:* ${json.name}\n
      • *Symbol:* ${json.symbol}\n
      • *Atomic Number:* ${json.atomic_number}\n

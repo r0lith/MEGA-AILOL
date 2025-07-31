@@ -34,10 +34,10 @@ let handler = async (m, { text, command, usedPrefix, conn }) => {
 
             // Prepare the message to send to the user
             let data = {
-                text: `*Search Results For "${text}":*\n\n${resultText}`,
+                text: `*Wattpad results for "${text}":*\n\n${resultText}`,
             };
             await conn.sendMessage(m.chat, data, { quoted: m });
-            m.react('✅');  // React with a checkmark to indicate success
+            m.react('🎉');  // React with a checkmark to indicate success
         } else {
             throw "No results found for your query.";
         }
