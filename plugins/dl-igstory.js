@@ -65,7 +65,7 @@ const handler = async (m, { conn, args }) => {
 
     if (mediaBuffer.length === 0) throw new Error('Downloaded file is empty');
 
-    const fileName = mediaData.data.title ? `${mediaData.data.title}.jpg` : 'media.jpg';
+    const fileName = mediaData.data.title ? `${mediaData.data.title}.jpg` : 'mediA.png';
     const mimetype = mediaData.data.video.length > 0 ? 'video/mp4' : 'image/jpeg';
 
     await conn.sendFile(m.chat, mediaBuffer, fileName, '*By Riruru*', m, false, { mimetype });

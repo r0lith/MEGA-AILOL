@@ -51,7 +51,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         ? conn.user.jid
         : m.sender
   if (!(who in global.db.data.users)) throw `The user is not found in my database`
-  let pp = await conn.profilePictureUrl(who, 'image').catch(_ => './assets/A.jpg')
+  let pp = await conn.profilePictureUrl(who, 'image').catch(_ => './assets/A.png')
   let user = global.db.data.users[who]
 
   let infobt = `

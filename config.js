@@ -79,7 +79,7 @@ global.fgsc = 'https://github.com/GlobalTechInfo/MEGA-AI'
 global.fgyt = 'https://youtube.com/@GlobalTechInfo'
 global.fgpyp = 'https://youtube.com/@GlobalTechInfo'
 global.fglog = 'https://i.ibb.co/G2dh9cB/qasim.jpg'
-global.thumb = fs.readFileSync('./assets/A.jpg')
+global.thumb = fs.readFileSync('./assets/A.png')
 
 global.wait = '⏳'
 global.rwait = '⏳'
