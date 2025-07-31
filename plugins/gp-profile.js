@@ -29,8 +29,8 @@ let str = `
 ▢ *🆙${mssg.lvl}:* ${level}
 ▢ *⬆️XP:* ${mssg.total} ${exp} (${user.exp - min} / ${xp})\n${math <= 0 ? `${mssg.xpUp} *${usedPrefix}levelup*` : `_*${math}xp*_ ${mssg.upNan}`}
 ▢ *🏆${mssg.rank}:* ${role}
-▢ *📇${mssg.regOn}:* ${registered ? '✅': '❎'}
-▢ *🎟️${mssg.prem}:* ${premG ? '✅' : '❎'}
+▢ *📇${mssg.regOn}:* ${registered ? '🎉': '❎'}
+▢ *🎟️${mssg.prem}:* ${premG ? '🎉' : '❎'}
 └──────────────`
     conn.sendFile(m.chat, pp, 'perfil.jpg', str, m, false, { mentions: [who] })
     m.react(done)

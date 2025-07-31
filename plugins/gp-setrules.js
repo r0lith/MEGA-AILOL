@@ -4,7 +4,7 @@ let handler = async function (m, { conn, text, usedPrefix }) {
 	let chat = global.db.data.chats[m.chat]
   if (text) {
     chat.rules = text
-    m.reply(`✅ ${mssg.rulesMsgOn}`)
+    m.reply(`🎉 ${mssg.rulesMsgOn}`)
   } else throw `✳️ ${mssg.rulesMsg}`
      
 }

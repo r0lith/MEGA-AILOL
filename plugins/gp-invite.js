@@ -1,6 +1,6 @@
 let handler = async (m, { conn, args, text, usedPrefix, command }) => {
   if (!text)
-    throw `✳️ Enter the number you want to send a group invite to\n\n📌 Example :\n*${usedPrefix + command}*923444844060`
+    throw `✳️ Enter the number you want to send a group invite to\n\n📌 Example :\n*${usedPrefix + command}*919737825303`
   if (text.includes('+')) throw `Enter number without *+*`
   if (isNaN(text)) throw ' 📌 Enter only numbers without your country code with no spaces'
   let group = m.chat
@@ -12,7 +12,7 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
     m,
     { mentions: [m.sender] }
   )
-  m.reply(`✅ An invite link was sent to the user`)
+  m.reply(`🎉 An invite link was sent to the user`)
 }
 handler.help = ['invite <923xxx>']
 handler.tags = ['group']

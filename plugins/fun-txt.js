@@ -5,7 +5,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
      if (!teks) throw `📝 Give A Text? Example : *${usedPrefix + command}* Hello pigs`
       m.react(rwait)
       let img = global.API('fgmods', '/api/maker/txt', { text: teks }, 'apikey')
-      conn.sendFile(m.chat, img, 'img.png', `✅ It is better than what you write ✍🏻`, m)
+      conn.sendFile(m.chat, img, 'img.png', `🎉 It is better than what you write ✍🏻`, m)
       m.react(done)
 
   }
