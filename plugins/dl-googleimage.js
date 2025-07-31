@@ -23,7 +23,7 @@ let handler = async (m, { conn, text }) => {
 
     // Check if the API returned valid image URLs
     if (!googleImageResponse || !googleImageResponse.imageUrls || googleImageResponse.imageUrls.length === 0) {
-      await m.react('✅');
+      await m.react('🎉');
       return m.reply("No images found for the search query.");
     }
 
@@ -57,7 +57,7 @@ let handler = async (m, { conn, text }) => {
     }
 
     // React with "done" emoji after the process is complete
-    await m.react('✅');
+    await m.react('🎉');
 
   } catch (error) {
     console.error('Error:', error);
@@ -69,5 +69,4 @@ handler.help = ['gimage', 'googleimage'];
 handler.tags = ['search'];
 handler.command = ['gimage', 'googleimage'];
 
-handler.limit = true
 export default handler;

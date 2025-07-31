@@ -20,7 +20,7 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
 
         // If there are images, send them
         let message = `Found images for query *${args[0]}*:\n\n`;
-        await m.react('✅');
+        await m.react('🎉');
 
         for (let i = 0; i < imageUrls.length; i++) {
             // Send each image as a message

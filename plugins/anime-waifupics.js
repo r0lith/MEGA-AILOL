@@ -11,7 +11,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       const response = await fetch(baseUrl + endpoint);
       if (!response.ok) throw `❎ Error fetching ${type} image`;
       const imageBuffer = await response.buffer(); // Get the image data as a buffer
-      conn.sendFile(m.chat, imageBuffer, 'img.jpg', `✅ Random ${type}`, m);
+      conn.sendFile(m.chat, imageBuffer, 'img.jpg', `🎉 Random ${type}`, m);
       m.react('😁');
     } catch (error) {
       console.error(error);

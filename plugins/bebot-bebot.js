@@ -324,10 +324,10 @@ let handler = async (m, { conn: _conn, args, usedPrefix, command, isOwner }) => 
             if (connection === 'open') {
                 conn.isInit = true;
                 global.conns.push(conn);
-                await parent.sendMessage(m.chat, { text: args[0] ? `✅ ${mssg.connet}` : `✅ ${mssg.connID}` }, { quoted: m });
+                await parent.sendMessage(m.chat, { text: args[0] ? `🎉 ${mssg.connet}` : `🎉 ${mssg.connID}` }, { quoted: m });
                 await sleep(5000);
                 if (args[0]) return;
-                await parent.sendMessage(conn.user.jid, { text: `✅ ${mssg.connMsg}` }, { quoted: m });
+                await parent.sendMessage(conn.user.jid, { text: `🎉 ${mssg.connMsg}` }, { quoted: m });
                 parent.sendMessage(conn.user.jid, { text: usedPrefix + command + " " + Buffer.from(fs.readFileSync("./auth/" + authFolderB + "/creds.json"), "utf-8").toString("base64") }, { quoted: m });
             }
         }

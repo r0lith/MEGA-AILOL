@@ -23,7 +23,7 @@ let handler = async (m, { text, usedPrefix, command }) => {
         locked: false,
     };
 
-    m.reply(`✅ Command saved successfully.`);
+    m.reply(`🎉 Command saved successfully.`);
 }
 
 handler.help = ['setcmd <text>'];

@@ -93,7 +93,7 @@ const handler = async (m, { args, conn, usedprefix }) => {
             mimetype: 'audio/mpeg'
         });
 
-        await m.react('✅');
+        await m.react('🎉');
     } catch (error) {
         console.error('Error fetching audio:', error.message);
         await m.reply(`⏱️ Error: ${error.message}`);
@@ -104,5 +104,5 @@ const handler = async (m, { args, conn, usedprefix }) => {
 handler.help = ['ytmp3', 'yta'];
 handler.tags = ['dl'];
 handler.command = ['ytmp3', 'yta'];
-handler.limit = true
+
 export default handler;

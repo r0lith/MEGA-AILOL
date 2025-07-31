@@ -38,12 +38,11 @@ let handler = async (m, { conn, usedPrefix, args, command, text }) => {
     }
   }
 
-  await m.react('✅'); // React with a success emoji
+  await m.react('🎉'); // React with a success emoji
 };
 
 handler.help = ['Twitter', 'xdl'];
 handler.tags = ['downloader'];
 handler.command = /^(twitter|xdl)$/i;
 
-handler.limit = true
 export default handler;

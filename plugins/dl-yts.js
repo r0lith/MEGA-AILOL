@@ -27,7 +27,7 @@ let handler = async (m, { conn, text }) => {
 
       `
     })
-    await m.react('✅'); // React with a done emoji
+    await m.react('🎉'); // React with a done emoji
 
     // Send the message along with the thumbnail of the first result
     conn.sendFile(m.chat, resultsToSend[0].thumbnail, 'yts.jpeg', message, m)
