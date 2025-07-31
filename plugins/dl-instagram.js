@@ -1,71 +1,84 @@
-/*  ──────── dependencies ────────  */
 import fetch from 'node-fetch';
-import { igdl } from 'btch-downloader';   // ← NEW
+import pkg from 'nayan-media-downloaders';
+const { instagram } = pkg;
 
-/*  ──────── helper ────────  */
 const fetchWithRetry = async (url, options, retries = 3) => {
   for (let i = 0; i < retries; i++) {
-    const res = await fetch(url, options);
-    if (res.ok) return res;
-    console.log(`Retrying… (${i + 1})`);
+    const response = await fetch(url, options);
+    if (response.ok) return response;
+    console.log(`Retrying... (${i + 1})`);
   }
   throw new Error('Failed to fetch media content after retries');
 };
 
-/*  ──────── main handler ────────  */
 const handler = async (m, { conn, args }) => {
-  if (!args[0])
-    throw '✳️ Enter the Instagram link next to the command';
+  if (!args[0]) throw '✳️ Enter the Instagram link next to the command';
 
-  // Accepts /reel/, /p/, or /tv/ forms
-  const igRegex =
-    /^(https?:\/\/)?(www\.)?(instagram\.com\/(reel|p|tv)\/[\w.-]+(\/)?(\?.*)?)$/i;
+  // Updated regex to capture various Instagram link formats
+  const instagramRegex = /^(https?:\/\/)?(www\.)?(instagram\.com\/(reel|p|tv)\/[A-Za-z0-9._%+-]+(\/)?(\?igsh=[A-Za-z0-9=]+)?)$/;
 
-  if (!igRegex.test(args[0]))
+  if (!args[0].match(instagramRegex)) {
     throw '❌ Link incorrect. Please ensure it is a valid Instagram post or reel link.';
+  }
 
   m.react('⏳');
 
   try {
-    /* 1. grab media list */
-    const mediaList = await igdl(args[0]);         // ← NEW
-    if (!mediaList.length) throw new Error('No media found');
+    const url = args[0];
+    console.log('Checking link:', url);
 
-    /* 2. pick the first item */
-    const { url: dlUrl, type } = mediaList[0];     // {url, type:'video'|'image'}
+    const mediaData = await instagram(url);
+    console.log('Media Data:', mediaData);
 
-    /* 3. download the file (with retry) */
-    const res = await fetchWithRetry(dlUrl, {
+    if (!mediaData.status) {
+      throw new Error(`Error: ${mediaData.msg || 'Failed to retrieve media data'}`);
+    }
+
+    let downloadUrl;
+    if (mediaData.data.video && mediaData.data.video.length > 0) {
+      downloadUrl = mediaData.data.video[0]; // Use the first video URL
+    } else if (mediaData.data.images && mediaData.data.images.length > 0) {
+      downloadUrl = mediaData.data.images[0]; // Use the first image URL
+    } else {
+      throw new Error('Could not fetch the download URL');
+    }
+
+    console.log('Download URL:', downloadUrl);
+
+    const response = await fetchWithRetry(downloadUrl, {
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-          '(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*'
       }
     });
 
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (!buf.length) throw new Error('Downloaded file is empty');
+    const contentType = response.headers.get('content-type');
+    if (!contentType || 
+        (!contentType.includes('image') && 
+        !contentType.includes('octet-stream') && 
+        !contentType.includes('video'))) {
+      throw new Error('Invalid content type received');
+    }
 
-    /* 4. send to chat */
-    const mime = type === 'video' ? 'video/mp4' : 'image/jpeg';
-    const fileName = `instagram.${type === 'video' ? 'mp4' : 'jpg'}`;
+    const arrayBuffer = await response.arrayBuffer();
+    const mediaBuffer = Buffer.from(arrayBuffer);
 
-    await conn.sendFile(m.chat, buf, fileName, '*By Riruru*', m, false, {
-      mimetype: mime
-    });
-    m.react('🎉');
-  } catch (err) {
-    console.error('IG-DL error:', err.message);
-    await m.reply(
-      '⚠️ An error occurred while processing the request. Please try again later.'
-    );
+    if (mediaBuffer.length === 0) throw new Error('Downloaded file is empty');
+
+    const fileName = mediaData.data.title ? `${mediaData.data.title}.jpg` : 'media.jpg';
+    const mimetype = mediaData.data.video.length > 0 ? 'video/mp4' : 'image/jpeg';
+
+    await conn.sendFile(m.chat, mediaBuffer, fileName, '*By Riruru*', m, false, { mimetype });
+    m.react('✅');
+  } catch (error) {
+    console.error('Error downloading from Instagram:', error.message, error.stack);
+    await m.reply('⚠️ An error occurred while processing the request. Please try again later.');
     m.react('❌');
   }
 };
 
-/*  ──────── meta ────────  */
-handler.help    = ['instagram', 'ig', 'igdl', 'insta', 'igdownload'];
-handler.tags    = ['downloader'];
-handler.command = ['instagram', 'ig', 'igdl', 'insta', 'igdownload'];
-
+handler.help = ['instagram', 'ig', 'igdl', 'instagramdl', 'insta', 'igdownload'];
+handler.tags = ['downloader'];
+handler.command = ['instagram', 'ig', 'igdl', 'instagramdl', 'insta', 'igdownload'];
+handler.limit = true
 export default handler;
