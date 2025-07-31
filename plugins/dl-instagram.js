@@ -4,8 +4,9 @@ import { instagramGetUrl } from 'instagram-url-direct';
 const fetchWithRetry = async (url, options, retries = 3) => {
   for (let i = 0; i < retries; i++) {
     const res = await fetch(url, options);
+    console.log(`fetchWithRetry: attempt ${i + 1}, status ${res.status}`);
     if (res.ok) return res;
-    console.log(`Retrying... (${i+1})`);
+    console.log(`Retrying... (${i + 1})`);
   }
   throw new Error('Failed to fetch media content after retries');
 };
@@ -20,27 +21,35 @@ const handler = async (m, { conn, args }) => {
 
   m.react('⏳');
   try {
-    // Fetch all media URLs and metadata
+    console.log('Handler: calling instagramGetUrl with', args[0]);
     const result = await instagramGetUrl(args[0]);
+    console.log('instagramGetUrl result:', JSON.stringify(result, null, 2));
+
     if (!result.url_list || result.url_list.length === 0) {
-      throw new Error('No media URLs found');
+      throw new Error('No media URLs found in result');
     }
 
-    // Choose first URL
     const downloadUrl = result.url_list[0];
+    console.log('Selected downloadUrl:', downloadUrl);
+
     const response = await fetchWithRetry(downloadUrl, {
       headers: { 'User-Agent': 'Mozilla/5.0' }
     });
+    console.log('Download response headers:', [...response.headers.entries()]);
+
     const buffer = Buffer.from(await response.arrayBuffer());
+    console.log('Downloaded buffer length:', buffer.length);
     if (!buffer.length) throw new Error('Empty media buffer');
 
-    // Determine MIME from first media_details entry
-    const md = result.media_details[0];
+    const md = result.media_details?.[0] || {};
+    console.log('Media details:', md);
+
     const isVideo = md.type === 'video';
     const ext = isVideo ? 'mp4' : 'jpg';
     const mime = isVideo ? 'video/mp4' : 'image/jpeg';
-    const fileName = `${result.post_info.owner_username}_${Date.now()}.${ext}`;
+    const fileName = `${result.post_info?.owner_username || 'insta'}_${Date.now()}.${ext}`;
 
+    console.log(`Sending file: ${fileName}, mimetype: ${mime}`);
     await conn.sendFile(
       m.chat,
       buffer,
@@ -52,8 +61,9 @@ const handler = async (m, { conn, args }) => {
     );
     m.react('✅');
   } catch (err) {
-    console.error('Error downloading from Instagram:', err);
-    await m.reply('⚠️ An error occurred. Please try again later.');
+    console.error('Error downloading from Instagram:', err.message);
+    console.error(err.stack);
+    await m.reply(`⚠️ Error: ${err.message}`);
     m.react('❌');
   }
 };

@@ -127,7 +127,7 @@ function startBot() {
   })
 
   botProcess.on('message', data => {
-    console.log(chalk.cyan(`✔️RECEIVED ${JSON.stringify(data)}`))
+
     
     if (typeof data === 'object' && data.type === 'pairing-code') {
       pairingCode = data.code
