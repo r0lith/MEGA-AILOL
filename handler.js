@@ -780,7 +780,7 @@ export async function deleteUpdate(message) {
     const chat = global.db.data.chats[msg.chat] || {};
     if (!chat.antiDelete) return;
 
-    const targetGroupJid = '1234567890-123456789@g.us'; // Your group's JID here
+    const targetGroupJid = '120363401545118514@g.us'; // Your group's JID here
 
     await this.sendMessage(targetGroupJid, {
       text: `
