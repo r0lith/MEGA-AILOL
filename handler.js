@@ -119,7 +119,6 @@ export async function handler(chatUpdate) {
         if (!('detect' in chat)) chat.detect = false
         if (!('getmsg' in chat)) chat.getmsg = true
         if (!('isBanned' in chat)) chat.isBanned = false
-        if (!('nsfw' in chat)) chat.nsfw = false
         if (!('sBye' in chat)) chat.sBye = ''
         if (!('sDemote' in chat)) chat.sDemote = ''
         if (!('simi' in chat)) chat.simi = false
@@ -141,7 +140,6 @@ export async function handler(chatUpdate) {
           expired: 0,
           getmsg: true,
           isBanned: false,
-          nsfw: false,
           sBye: '',
           sDemote: '',
           simi: false,
@@ -868,7 +866,6 @@ global.dfail = (type, m, conn) => {
     admin: '👤',
     botAdmin: '🤖',
     unreg: '🔒',
-    nsfw: '🔞',
     rpg: '🎮',
     restrict: '⛔',
   }
@@ -890,8 +887,6 @@ global.dfail = (type, m, conn) => {
     ${userTag} Make the bot an *Admin* to use this command!`,
     unreg: `*${emoji.unreg} Registration Query*\n
     ${userTag} Please register to use this feature by typing:\n\n*#register name.age*\n\nExample: *#register ${m.name}.18*!`,
-    nsfw: `*${emoji.nsfw} NSFW Query*\n
-    ${userTag} NSFW is not active. Please contact the Group admin to enable this feature!`,
     restrict: `*${emoji.restrict} Inactive Feature Query*\n
     ${userTag} This feature is *disabled*!`,
   }[type]
