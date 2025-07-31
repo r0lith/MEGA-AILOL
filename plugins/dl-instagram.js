@@ -11,17 +11,26 @@ const fetchWithRetry = async (url, options, retries = 3) => {
   throw new Error('Failed to fetch media content after retries');
 };
 
-const handler = async (m, { conn, args }) => {
-  if (!args[0]) throw '✳️ Enter the Instagram link next to the command';
+const handler = async (m, { conn, args } = {}) => {
+  // Debugging: log full context
+  console.log('Handler invoked');
+  console.log('m:', JSON.stringify({ text: m?.text, body: m?.body, caption: m?.caption }, null, 2));
+  console.log('args:', args);
+
+  if (!args || !args[0]) {
+    console.error('No args provided or args[0] is undefined');
+    throw '✳️ Enter the Instagram link next to the command';
+  }
 
   const rgx = /^(https?:\/\/)?(www\.)?instagram\.com\/(reel|p|tv)\/[A-Za-z0-9._%+-]+\/?(\?.*)?$/;
   if (!rgx.test(args[0])) {
+    console.error('Link did not match regex:', args[0]);
     throw '❌ Link incorrect. Please ensure it is a valid Instagram post or reel link.';
   }
 
   m.react('⏳');
   try {
-    console.log('Handler: calling instagramGetUrl with', args[0]);
+    console.log('Calling instagramGetUrl with', args[0]);
     const result = await instagramGetUrl(args[0]);
     console.log('instagramGetUrl result:', JSON.stringify(result, null, 2));
 
@@ -41,7 +50,7 @@ const handler = async (m, { conn, args }) => {
     console.log('Downloaded buffer length:', buffer.length);
     if (!buffer.length) throw new Error('Empty media buffer');
 
-    const md = result.media_details?.[0] || {};
+    const md = (result.media_details && result.media_details[0]) || {};
     console.log('Media details:', md);
 
     const isVideo = md.type === 'video';
