@@ -10,7 +10,7 @@ export async function before(m, { conn, isAdmin, isBotAdmin }) {
   chat = global.db.data.chats[m.chat];
 
   // Log current settings to confirm they are correctly loaded
-  console.log(`AntiLink is ${chat.antiLink}, Admin status: ${isAdmin}, Bot Admin: ${isBotAdmin}`);
+ // console.log(`AntiLink is ${chat.antiLink}, Admin status: ${isAdmin}, Bot Admin: ${isBotAdmin}`);
 
   // Check if message contains a group link and antiLink is enabled
   const isGroupLink = linkRegex.exec(m.text);
