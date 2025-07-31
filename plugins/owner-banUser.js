@@ -11,7 +11,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   conn.reply(
     m.chat,
     `
-✅ BANNED
+🎉 BANNED
 
 ───────────
 @${who.split`@`[0]} you will no longer be able to use my commands `,

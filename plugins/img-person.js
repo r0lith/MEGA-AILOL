@@ -4,7 +4,7 @@ let handler = async(m, { conn, usedPrefix, command }) => {
 	
 	let res = await conn.getFile(global.API('fgmods', '/api/img/ai-face', { }, 'apikey'))
 	let img = res.data
-        await conn.sendFile(m.chat, img, 'img.jpg', `✅ Esta persona no existe fue generado con IA`, m) 
+        await conn.sendFile(m.chat, img, 'img.jpg', `🎉 Esta persona no existe fue generado con IA`, m) 
 	m.react(done) 
 }
 handler.help = ['person']

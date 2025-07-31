@@ -7,19 +7,19 @@ let handler = async (m, { conn, text, args, usedPrefix, command }) => {
 
   if (args[0] === "es") {
     user.language = args[0];
-    m.reply("✅ *Español Seleccionado*\n\nAhora el bot responderá a su mensaje en Español");
+    m.reply("🎉 *Español Seleccionado*\n\nAhora el bot responderá a su mensaje en Español");
   } else if (args[0] === "en") {
     user.language = args[0];
-    m.reply("✅ *Selected English*\n\nNow the bot will reply to your message in English");
+    m.reply("🎉 *Selected English*\n\nNow the bot will reply to your message in English");
   } else if (args[0] === "id") {
     user.language = args[0];
-    m.reply("✅ *Bahasa Indonesia terpilih*\n\nSekarang bot akan membalas pesanmu dengan bahasa Indonesia");
+    m.reply("🎉 *Bahasa Indonesia terpilih*\n\nSekarang bot akan membalas pesanmu dengan bahasa Indonesia");
   } else if (args[0] === "pt") {
     user.language = args[0];
-    m.reply("✅ *Português selecionados*\n\nAgora o bot vai responder a sua mensagem em Português");
+    m.reply("🎉 *Português selecionados*\n\nAgora o bot vai responder a sua mensagem em Português");
   } else if (args[0] === "ar") {
     user.language = args[0];
-    m.reply("✅ *تم اختيار اللغة العربية*\n\nالآن سيقوم البوت بالرد على رسائلك باللغة العربية");
+    m.reply("🎉 *تم اختيار اللغة العربية*\n\nالآن سيقوم البوت بالرد على رسائلك باللغة العربية");
   } else {
     m.reply(te);
   }

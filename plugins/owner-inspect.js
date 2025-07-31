@@ -37,7 +37,7 @@ const extractGroupMetadata = result => {
     id: group.attrs.id.includes('@') ? group.attrs.id : baileys.jidEncode(group.attrs.id, 'g.us'),
     subject: group.attrs.subject,
     creation: new Date(+group.attrs.creation * 1000).toLocaleString('id', {
-      timeZone: 'Asia/Karachi',
+      timeZone: 'Asia/Kolkata',
     }),
     owner: group.attrs.creator
       ? 'wa.me/' + baileys.jidNormalizedUser(group.attrs.creator).split('@')[0]
