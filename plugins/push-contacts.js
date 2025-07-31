@@ -26,11 +26,11 @@ if (!text && !m.quoted) return m.reply("Where is Infos")
             count--;
             sentCount++;
             if (count === 0) {
-m.reply(`Succesfuly Sended the notification to all the group members ✅.
+m.reply(`Succesfuly Sended the notification to all the group members 🎉.
 
 👨‍🎓 *Operator:* ${author}
 🤖 *Sender:* ${botname}
-✅ *Total:* ${sentCount} users Notified`);
+🎉 *Total:* ${sentCount} users Notified`);
             }
         }, i * 5000); // delay each transmission for 5 second
     }

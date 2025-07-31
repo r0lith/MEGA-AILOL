@@ -17,7 +17,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         im.stdin.write(sticker)
         im.stdin.end()
         im.on('exit', () => {
-            conn.sendFile(m.chat, Buffer.concat(bufs), 'img.png', `*✅ ${mssg.result}*`, m)
+            conn.sendFile(m.chat, Buffer.concat(bufs), 'img.png', `*🎉 ${mssg.result}*`, m)
         })
     } else throw `✳️ ${mssg.replyStick}`
 }
