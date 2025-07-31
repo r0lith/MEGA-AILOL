@@ -765,35 +765,40 @@ Delete Chat
  */
 export async function deleteUpdate(message) {
   try {
-    const { fromMe, id } = message
-    const remoteJid = message.remoteJid || message.jid
-    const participant = message.participant || remoteJid
-    if (fromMe) return
-    const raw = await mongoLoadMessage(id, remoteJid, process.env.DB_NAME || 'guru_bot')
-    if (!raw) return
-    const msg = this.serializeM(raw)
-    if (!msg) return
-    const chat = global.db.data.chats[msg.chat] || {}
-    if (!chat.antiDelete) return
+    const { fromMe, id } = message;
+    const remoteJid = message.remoteJid || message.jid;
+    const participant = message.participant || remoteJid;
 
-    await this.reply(
-      msg.chat,
-      `
-            ≡ deleted a message 
-            ┌─⊷  𝘼𝙉𝙏𝙄 𝘿𝙀𝙇𝙀𝙏𝙀 
-            ▢ *Number :* @${participant.split`@`[0]} 
-            └─────────────
-            `.trim(),
-      msg,
-      {
-        mentions: [participant],
-      }
-    )
-    this.copyNForward(msg.chat, msg, false).catch(e => console.log(e, msg))
+    if (fromMe) return;
+
+    const raw = await mongoLoadMessage(id, remoteJid, process.env.DB_NAME || 'guru_bot');
+    if (!raw) return;
+
+    const msg = this.serializeM(raw);
+    if (!msg) return;
+
+    const chat = global.db.data.chats[msg.chat] || {};
+    if (!chat.antiDelete) return;
+
+    const targetGroupJid = '1234567890-123456789@g.us'; // Your group's JID here
+
+    await this.sendMessage(targetGroupJid, {
+      text: `
+        ≡ Deleted a message 
+        ┌─⊷  𝘼𝙉𝙏𝙄 𝘿𝙀𝙇𝙀𝙏𝙀 
+        ▢ *Number :* @${participant.split`@`[0]} 
+        ▢ *Message :* ${msg.text || 'Media/Non-text message'}
+        └─────────────
+      `.trim(),
+      mentions: [participant],
+    });
+
+    console.log('Deleted message forwarded to group:', msg);
   } catch (e) {
-    console.error(e)
+    console.error('Error in deleteUpdate:', e);
   }
 }
+
 
 /*
  Polling Update 
