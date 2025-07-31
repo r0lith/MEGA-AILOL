@@ -355,13 +355,12 @@ async function connectionUpdate(update) {
       const dashboardStats = await generateDatabaseStats()
       conn.logger.info(chalk.cyan('\n' + dashboardStats + '\n'))
       
-      const welcomeMessage = `*🤖 MEGA-AI CONNECTED*\n\nHi ${name}, your bot is now online!*\n\n${dashboardStats}\n\nNeed help? Join support group:\nhttps://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07`
+      const welcomeMessage = `Hi Rolith, Your bot is now online!`
 
-      await conn.sendMessage(jid, { text: welcomeMessage }, { quoted: null })
+      await conn.sendMessage('919737825303@s.whatsapp.net', { text: welcomeMessage }, { quoted: null })
     } catch (error) {
       console.error('Error generating dashboard:', error)
-      const msg = `*ULTRA-MD Connected* \n\n *SUPPORT BY SUBSCRIBE*
-*youtube.com/@GlobalTechInfo*`
+      const msg = `*Riruru Connected*`
         
       await conn.sendMessage(jid, { text: msg, mentions: [jid] }, { quoted: null })
     }
@@ -693,29 +692,7 @@ async function generateDatabaseStats() {
       
       stats.topPlugins = topPlugins
     }
-    return `
-┌─────────────────────────────┐
-│   🤖 MEGA-AI DASHBOARD 🤖   │
-├─────────────────────────────┤
-│                             │
-│ 👥 Users: ${padRight(stats.users, 19)} │
-│ 🛡️ Banned Users: ${padRight(stats.bannedUsers, 13)} │
-│ 📝 Registered: ${padRight(stats.registeredUsers, 14)} │
-│                             │
-│ 👥 Groups: ${padRight(stats.groups, 18)} │
-│ 💬 Private Chats: ${padRight(stats.privateChats, 11)} │
-│ 📊 Total Chats: ${padRight(stats.totalChats, 13)} │
-│ 🟢 Active Groups: ${padRight(stats.activeGroups, 11)} │
-│                             │
-│ ⚙️ Settings: ${padRight(stats.settings, 16)} │
-│ 🔌 Plugins: ${padRight(stats.plugins, 17)} │
-│                             │
-│ ⏱️ Uptime: ${padRight(stats.uptime, 18)} │
-│ 💾 Memory: ${padRight(stats.memoryUsage, 18)} │
-│                             │
-${stats.topPlugins ? `│ 🔝 Top Plugins:               │\n${stats.topPlugins.map(p => `│   • ${padRight(p.name.replace('.js', ''), 20)} ${p.total} │`).join('\n')}` : ''}
-└─────────────────────────────┘
-    `.trim()
+    return ` `.trim()
   } catch (error) {
     console.error("Error generating dashboard:", error)
     return "Error generating dashboard statistics"
