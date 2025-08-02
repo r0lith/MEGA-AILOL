@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import FormData from 'form-data'
-import cheerio from 'cheerio'  // <-- Add cheerio import
+import cheerio from 'cheerio'
 
 /**
  * Handler for all /ephoto360 commands.
@@ -9,21 +9,31 @@ import cheerio from 'cheerio'  // <-- Add cheerio import
  *   /ephoto360 https://en.ephoto360.com/handwritten-text-on-foggy-glass-online-680.html Hello World
  */
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-  // 1. Validate input
+  // 1. Validate and sanitize input
   if (args.length < 2) {
     throw `✳️ Usage: ${usedPrefix}${command} <effectPageURL> | <text>\nExample: ${usedPrefix}${command} https://en.ephoto360.com/handwritten-text-on-foggy-glass-online-680.html Hello`
   }
-  const [effectPageURL, ...textParts] = args
-  const text = textParts.join(' ')
+
+  // Parse URL safely: strip markdown and fragments
+  let [effectPageURLRaw, ...textParts] = args
+  let effectPageURL = effectPageURLRaw
+    .replace(/^\[|\]$/g, '')                             // Remove leading/trailing brackets
+    .replace(/\(.*\)$/g, '')                             // Remove markdown link parentheses
+    .replace(/#.*$/, '')                                 // Remove # fragments
+    .replace(/^<|>$/g, '')                               // Remove angle brackets if present
+    .replace(/^https?:\/\//, 'https://')                 // Normalize to https
+    .trim()
+  let text = textParts.join(' ').trim()
+
   if (!effectPageURL.includes('photo360.com')) {
     throw '❌ Invalid URL: must be a photo360.com effect page.'
   }
-  if (!text) throw `✳️ Please provide text to render.`
+  if (!text) throw '✳️ Please provide text to render.'
 
   m.react('⌛')
 
   try {
-    // 2. Fetch initial page and extract form data with cheerio
+    // 2. Fetch effect page
     const initialResp = await fetch(effectPageURL, {
       headers: {
         'Accept': 'text/html',
@@ -34,36 +44,33 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     const html = await initialResp.text()
     const cookies = initialResp.headers.get('set-cookie') || ''
 
-    // Parse html with cheerio
+    // 3. Extract form data using cheerio
     const $ = cheerio.load(html)
-
-    // Extract current form fields by their actual attribute names
     const build_server = $('input[name="build_server"]').attr('value') || ''
     const build_server_id = $('input[name="build_server_id"]').attr('value') || ''
     const token = $('input[name="token"]').attr('value') || ''
-    const submit = $('button[name="submit"]').attr('value') || ''
+    // Button can be input or button, get value properly
+    let submit = $('button[name="submit"]').attr('value')
+    if (!submit) submit = $('input[type="submit"]').attr('value') || ''
     const radioMatches = $('input[name="radio0[radio]"]')
       .map((i, el) => $(el).val())
       .get()
 
     if (!build_server || !token) throw new Error('Form fields missing; page structure changed.')
 
-    // Helper for secure random index
-    const randomInt = (max) => Math.floor(Math.random() * max)
-
-    // Prepare form payload
+    // 4. Prepare form data
     const form = new FormData()
     form.append('submit', submit)
     form.append('token', token)
     form.append('build_server', build_server)
     if (build_server_id) form.append('build_server_id', build_server_id)
     if (radioMatches.length) {
-      const choice = radioMatches[randomInt(radioMatches.length)]
+      const choice = radioMatches[Math.floor(Math.random() * radioMatches.length)]
       form.append('radio0[radio]', choice)
     }
     form.append('text[]', text)
 
-    // 3. Submit form to get JSON payload
+    // 5. POST form to get JSON payload
     const postResp = await fetch(effectPageURL, {
       method: 'POST',
       headers: {
@@ -74,14 +81,12 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     })
     if (!postResp.ok) throw new Error('Failed to submit input form.')
     const postHtml = await postResp.text()
-
-    // extract JSON blob from <div id="form_value"> or <input id="form_value_input">
     const $2 = cheerio.load(postHtml)
     let jsonText = $2('#form_value').text().trim()
     if (!jsonText) jsonText = $2('#form_value_input').attr('value')?.trim() || ''
     if (!jsonText) throw new Error('no generated form value found')
 
-    // 4. Create image from JSON payload
+    // 6. Submit final create-image request
     let payload
     try {
       payload = JSON.parse(jsonText)
@@ -111,13 +116,10 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     const imgJson = await imgResp.json()
     if (!imgJson.success) throw new Error('generation failed: status is false')
 
-    // Assemble final URL
+    // 7. Assemble and send result
     const base = payload.build_server
     const imgPath = imgJson.image || imgJson.fullsize_image
     const imageUrl = base + imgPath
-    const sessionId = String(imgJson.session_id)
-
-    // 5. Send back the generated image file
     const ext = imageUrl.split('.').pop().split(/\W/)[0] || 'jpg'
     await conn.sendFile(m.chat, imageUrl, `effect.${ext}`, null, m)
     m.react('🎉')
