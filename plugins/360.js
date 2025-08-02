@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import FormData from 'form-data'
+import cheerio from 'cheerio'  // <-- Add cheerio import
 
 /**
  * Handler for all /ephoto360 commands.
@@ -22,7 +23,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   m.react('⌛')
 
   try {
-    // 2. Fetch initial page and extract form data
+    // 2. Fetch initial page and extract form data with cheerio
     const initialResp = await fetch(effectPageURL, {
       headers: {
         'Accept': 'text/html',
@@ -32,21 +33,22 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!initialResp.ok) throw new Error('Failed to load effect page.')
     const html = await initialResp.text()
     const cookies = initialResp.headers.get('set-cookie') || ''
-    // Parse with regex (or cheerio if you prefer)
-    const getVal = (id) => {
-      const re = new RegExp(`id="${id}"\\s+value="([^"]+)"`)
-      const m = html.match(re)
-      return m ? m[1] : ''
-    }
-    const build_server = getVal('build_server')
-    const build_server_id = getVal('build_server_id')
-    const token = getVal('token')
-    const submit = getVal('submit')
-    // collect radio options
-    const radioMatches = [...html.matchAll(/name="radio0\[radio\]" value="([^"]+)"/g)].map(m=>m[1])
+
+    // Parse html with cheerio
+    const $ = cheerio.load(html)
+
+    // Extract current form fields by their actual attribute names
+    const build_server = $('input[name="build_server"]').attr('value') || ''
+    const build_server_id = $('input[name="build_server_id"]').attr('value') || ''
+    const token = $('input[name="token"]').attr('value') || ''
+    const submit = $('button[name="submit"]').attr('value') || ''
+    const radioMatches = $('input[name="radio0[radio]"]')
+      .map((i, el) => $(el).val())
+      .get()
+
     if (!build_server || !token) throw new Error('Form fields missing; page structure changed.')
 
-    // helper for secure random index
+    // Helper for secure random index
     const randomInt = (max) => Math.floor(Math.random() * max)
 
     // Prepare form payload
@@ -72,15 +74,14 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     })
     if (!postResp.ok) throw new Error('Failed to submit input form.')
     const postHtml = await postResp.text()
+
     // extract JSON blob from <div id="form_value"> or <input id="form_value_input">
-    let jsonText = ''
-    const divMatch = postHtml.match(/<div[^>]+id="form_value"[^>]*>([\s\S]*?)<\/div>/)
-    const inpMatch = postHtml.match(/<input[^>]+id="form_value_input"[^>]+value="([^"]+)"/)
-    if (divMatch) jsonText = divMatch[1].trim()
-    else if (inpMatch) jsonText = inpMatch[1].trim()
+    const $2 = cheerio.load(postHtml)
+    let jsonText = $2('#form_value').text().trim()
+    if (!jsonText) jsonText = $2('#form_value_input').attr('value')?.trim() || ''
     if (!jsonText) throw new Error('no generated form value found')
 
-    // 4. Create image
+    // 4. Create image from JSON payload
     let payload
     try {
       payload = JSON.parse(jsonText)
@@ -92,7 +93,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     urlEncoded.set('id', payload.id)
     urlEncoded.set('token', payload.token)
     urlEncoded.set('build_server', payload.build_server)
-    urlEncoded.set('build_server_id', payload.build_server_id)
+    if (payload.build_server_id) urlEncoded.set('build_server_id', payload.build_server_id)
     if (payload.radio0?.radio) urlEncoded.set('radio0[radio]', payload.radio0.radio)
     payload.text.forEach(t => urlEncoded.append('text[]', t))
 
@@ -116,7 +117,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     const imageUrl = base + imgPath
     const sessionId = String(imgJson.session_id)
 
-    // 5. Send back
+    // 5. Send back the generated image file
     const ext = imageUrl.split('.').pop().split(/\W/)[0] || 'jpg'
     await conn.sendFile(m.chat, imageUrl, `effect.${ext}`, null, m)
     m.react('🎉')
